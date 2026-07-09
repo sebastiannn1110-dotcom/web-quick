@@ -1,0 +1,12 @@
+<svg width="760" height="190" viewBox="0 0 760 190" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Quiksol logo">
+  <defs>
+    <filter id="shadow" x="-8%" y="-20%" width="116%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#071314" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M22 28C25.8 11.7 39.4 0 56.1 0H156.4C179.6 0 196.1 21.8 190.4 44.3L172.2 116.3C168.3 131.7 154.4 142.5 138.5 142.5H93.8L84.4 179.5H30.6L40 142.5H32.8C9.3 142.5 -7.2 120.1 -1 97.5L22 28ZM61.2 40.5L45.1 101.6H123.3L139.4 40.5H61.2Z" fill="#D96022"/>
+    <path d="M31 149.2H725L75.5 189.5H19L31 149.2Z" fill="#D96022"/>
+    <text x="190" y="119" fill="#D96022" font-family="Arial Black, Impact, Arial, sans-serif" font-size="106" font-style="italic" font-weight="900" letter-spacing="-7">Quiksol</text>
+  </g>
+</svg>

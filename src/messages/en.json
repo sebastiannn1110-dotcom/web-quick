@@ -1,0 +1,741 @@
+{
+  "schema": {
+    "organizationDescription": "Quicksol Global supports electronics companies with independent component sourcing, shortage management, procurement cost reduction, inventory support and quality-focused supply chain services."
+  },
+  "common": {
+    "brand": "Quicksol Global",
+    "tagline": "Independent electronic components supply chain partner",
+    "skip": "Skip to main content",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "quality": "Quality",
+      "global": "Global",
+      "insights": "Insights",
+      "contact": "Contact",
+      "brands": "Brands & Categories",
+      "valueAdded": "Value-Added Services",
+      "partners": "Partners",
+      "careers": "Careers",
+      "rfq": "Request a Quote",
+      "portal": "Customer Portal",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "cookies": "Cookies"
+    },
+    "cta": {
+      "rfq": "Request a Quote",
+      "services": "Explore Services",
+      "contact": "Contact Sales",
+      "globalTeam": "Contact Global Team",
+      "submitRfq": "Submit RFQ",
+      "learnMore": "Learn more",
+      "submit": "Submit",
+      "sending": "Sending...",
+      "uploading": "Uploading request..."
+    },
+    "language": {
+      "label": "Language",
+      "mobileLabel": "Choose language"
+    },
+    "footer": {
+      "description": "Quicksol helps global electronics companies secure critical components, manage shortages, reduce procurement costs and strengthen supply chain resilience through a trusted international sourcing network and rigorous quality control.",
+      "copyright": "All rights reserved.",
+      "noSocial": "Public social channels and partner logos should be linked only after authorization.",
+      "groups": {
+        "company": "Company",
+        "solutions": "Solutions",
+        "resources": "Resources",
+        "legal": "Legal"
+      }
+    },
+    "labels": {
+      "demo": "Demo insight",
+      "prepared": "Prepared for verification",
+      "benefit": "Client benefit",
+      "process": "Process",
+      "when": "When it is used",
+      "region": "Region",
+      "coverage": "Coverage",
+      "download": "Document area",
+      "approvedOnly": "Approved assets only"
+    },
+    "empty": {
+      "partnersTitle": "Partner logos are not published without approval",
+      "partnersBody": "This area is ready for authorized client, manufacturer or logistics partner assets once Quicksol confirms usage rights.",
+      "insightsTitle": "Market intelligence library ready for live data",
+      "insightsBody": "Connect a CMS, market feed or internal research workflow to publish verified component insights."
+    }
+  },
+  "meta": {
+    "home": {
+      "title": "Quicksol Global | Electronic Components Supply Chain Partner",
+      "description": "Independent global sourcing, shortage management, cost reduction, quality inspection and supply chain support for OEM, ODM and EMS electronics companies."
+    },
+    "about": {
+      "title": "About Quicksol Global",
+      "description": "Learn how Quicksol Global supports electronics companies with international sourcing, quality discipline and supply chain resilience."
+    },
+    "services": {
+      "title": "Core Services | Quicksol Global",
+      "description": "Electronic component sourcing, shortage support, cost reduction, excess inventory, procurement and quality assurance services."
+    },
+    "market": {
+      "title": "Market Insights | Quicksol Global",
+      "description": "A prepared market intelligence hub for component trends, shortage alerts and supply chain updates."
+    },
+    "brands": {
+      "title": "Brands & Categories | Quicksol Global",
+      "description": "Explore the component categories Quicksol can help source, prepared for connection to verified inventory data."
+    },
+    "quality": {
+      "title": "Quality & Certifications | Quicksol Global",
+      "description": "Quality control process, inspection, traceability, supplier verification and documentation support."
+    },
+    "valueAdded": {
+      "title": "Value-Added Services | Quicksol Global",
+      "description": "Inspection, sealing, baking, tape and reel, testing, programming and documentation support for electronics procurement."
+    },
+    "global": {
+      "title": "Global Presence | Quicksol Global",
+      "description": "Regional coverage for Asia Pacific, the Americas and Europe with contact routing prepared for confirmed locations."
+    },
+    "partners": {
+      "title": "Partners | Quicksol Global",
+      "description": "Partner and trusted-by area prepared for verified, authorized logos and business relationships."
+    },
+    "careers": {
+      "title": "Careers | Quicksol Global",
+      "description": "Join a global B2B supply chain team focused on electronics sourcing, quality and customer responsiveness."
+    },
+    "contact": {
+      "title": "Contact Quicksol Global",
+      "description": "Contact Quicksol Global for sourcing support, shortage management, regional inquiries and commercial assistance."
+    },
+    "rfq": {
+      "title": "Request a Quote | Quicksol Global",
+      "description": "Submit an RFQ for electronic components, part numbers, quantities, target pricing and BOM files."
+    },
+    "portal": {
+      "title": "Customer Portal | Quicksol Global",
+      "description": "Prepared customer portal experience for future BOM upload, RFQ tracking, inventory search and AI assistance."
+    },
+    "terms": {
+      "title": "Terms and Conditions | Quicksol Global",
+      "description": "Terms and conditions structure prepared for legal review and publication."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Quicksol Global",
+      "description": "Privacy policy structure for contact, RFQ and business inquiry data handling."
+    },
+    "cookies": {
+      "title": "Cookies Policy | Quicksol Global",
+      "description": "Cookie policy structure for essential, analytics and future preference controls."
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Independent global distribution",
+      "title": "Global Electronic Components Supply Chain Partner",
+      "body": "Helping OEM, ODM and EMS companies source critical components, reduce material costs, manage shortages and optimize inventory worldwide.",
+      "imageAlt": "Abstract global electronics supply chain network with semiconductor components and logistics routes"
+    },
+    "trust": {
+      "title": "Built for complex global sourcing",
+      "items": [
+        {
+          "title": "Global supply network",
+          "body": "International sourcing coverage prepared for regional teams and qualified supplier relationships."
+        },
+        {
+          "title": "Quality control processes",
+          "body": "Inspection, documentation review and traceability steps help reduce procurement risk."
+        },
+        {
+          "title": "OEM, ODM and EMS support",
+          "body": "Commercial workflows are designed for engineering, purchasing and production teams."
+        },
+        {
+          "title": "Independent distribution expertise",
+          "body": "Flexible sourcing support for shortages, cost pressure and difficult allocation conditions."
+        }
+      ]
+    },
+    "what": {
+      "eyebrow": "What Quicksol does",
+      "title": "Sourcing discipline for critical electronic components",
+      "body": "Quicksol helps electronics companies locate components, respond to shortages, reduce procurement costs, manage excess inventory and coordinate quality-focused global supply chain support."
+    },
+    "services": {
+      "eyebrow": "Core services",
+      "title": "Practical support across the component lifecycle",
+      "body": "From urgent sourcing to long-term procurement planning, each service is structured for speed, transparency and quality control.",
+      "items": [
+        {
+          "title": "Electronic Component Sourcing",
+          "body": "Locate hard-to-find, allocated or urgent components through an international supplier network."
+        },
+        {
+          "title": "Shortage Management",
+          "body": "Support purchasing teams when lead times, allocations or EOL risk affect production."
+        },
+        {
+          "title": "Cost Reduction",
+          "body": "Identify competitive sourcing options while protecting quality expectations."
+        },
+        {
+          "title": "Excess Inventory Solutions",
+          "body": "Prepare workflows to evaluate, route and recover value from surplus inventory."
+        },
+        {
+          "title": "Global Procurement",
+          "body": "Coordinate international purchasing requests with supplier verification and commercial discipline."
+        },
+        {
+          "title": "Supply Chain Support",
+          "body": "Help teams improve availability, responsiveness and procurement visibility."
+        },
+        {
+          "title": "Quality Inspection",
+          "body": "Support incoming inspection, visual checks, packaging review and documentation."
+        },
+        {
+          "title": "Value-Added Services",
+          "body": "Prepare inspection, sealing, baking, tape and reel, testing and documentation services."
+        }
+      ]
+    },
+    "help": {
+      "eyebrow": "How Quicksol helps",
+      "title": "A clear sourcing flow from need to support",
+      "steps": [
+        {
+          "title": "Need",
+          "body": "Share part numbers, quantities, timing, quality requirements and commercial constraints."
+        },
+        {
+          "title": "Source",
+          "body": "The sourcing team searches qualified channels and evaluates availability."
+        },
+        {
+          "title": "Verify",
+          "body": "Supplier, documentation, packaging and inspection checkpoints reduce risk."
+        },
+        {
+          "title": "Deliver",
+          "body": "Procurement and logistics coordination keep the request moving."
+        },
+        {
+          "title": "Support",
+          "body": "Follow-up helps purchasing teams refine future demand and shortage response."
+        }
+      ]
+    },
+    "insights": {
+      "eyebrow": "Market intelligence",
+      "title": "Prepared for verified market signals",
+      "body": "The insights area is structured for future DRAM, IC, memory, CPU, HDD, LCD, shortage and price trend feeds.",
+      "items": [
+        {
+          "category": "DRAM",
+          "title": "Memory pricing watchlist",
+          "body": "Demo structure for verified pricing commentary once market data is connected."
+        },
+        {
+          "category": "Supply Chain",
+          "title": "Shortage alert workflow",
+          "body": "Demo structure for publishing confirmed allocation and lead-time updates."
+        },
+        {
+          "category": "IC",
+          "title": "Critical component monitoring",
+          "body": "Demo structure for category-level intelligence and sourcing notes."
+        }
+      ]
+    },
+    "quality": {
+      "eyebrow": "Quality first",
+      "title": "Inspection, traceability and documentation before delivery",
+      "body": "Quality workflows can include supplier verification, incoming visual inspection, packaging review, anti-counterfeit measures, documentation checks and third-party laboratory support when required."
+    },
+    "global": {
+      "eyebrow": "Global presence",
+      "title": "Regional coverage across Asia Pacific, the Americas and Europe",
+      "body": "The site is prepared to publish confirmed office, region and contact information without inventing addresses or phone numbers."
+    },
+    "partners": {
+      "eyebrow": "Partners and trusted relationships",
+      "title": "A protected space for authorized logos",
+      "body": "Quicksol can publish approved partner, customer or manufacturer assets here after permission is confirmed."
+    },
+    "finalCta": {
+      "title": "Ready to strengthen your electronic components supply chain?",
+      "body": "Submit an RFQ or contact the global team to discuss sourcing, shortages, cost reduction and quality requirements."
+    }
+  },
+  "pages": {
+    "about": {
+      "hero": {
+        "eyebrow": "About Quicksol",
+        "title": "Global sourcing with quality discipline",
+        "body": "Quicksol Global supports electronics companies that need fast, transparent and quality-focused access to component supply."
+      },
+      "sections": [
+        {
+          "title": "Mission",
+          "body": "Help electronics companies secure critical components, manage supply risk and improve procurement resilience through trusted international sourcing."
+        },
+        {
+          "title": "Vision",
+          "body": "Build a global supply chain partner known for responsiveness, disciplined quality control and practical support during complex market conditions."
+        },
+        {
+          "title": "Customer focus",
+          "body": "Support OEM, ODM and EMS teams with clear communication, RFQ structure, sourcing visibility and accountable follow-through."
+        }
+      ],
+      "values": [
+        "Quality before volume",
+        "Transparent communication",
+        "Global responsiveness",
+        "Responsible sourcing",
+        "Long-term customer trust",
+        "Operational precision"
+      ],
+      "notice": "Executive names, legal history and dated milestones should be added only after Quicksol confirms the source information."
+    },
+    "services": {
+      "hero": {
+        "eyebrow": "Core services",
+        "title": "Supply chain services for electronic components",
+        "body": "Each service is designed to help purchasing and engineering teams respond faster while protecting quality expectations."
+      },
+      "items": [
+        {
+          "title": "Component Sourcing",
+          "description": "Search global channels for electronic components, including hard-to-find and allocation-sensitive parts.",
+          "benefit": "Improves availability and gives buyers more sourcing options.",
+          "process": "RFQ intake, supplier search, availability review, commercial validation and quality checkpoints."
+        },
+        {
+          "title": "Shortage Support",
+          "description": "Support urgent requirements when lead times, allocation or EOL conditions affect production.",
+          "benefit": "Helps reduce line-down risk and accelerates response during constrained markets.",
+          "process": "Priority part review, alternate source evaluation, risk checks and delivery coordination."
+        },
+        {
+          "title": "Cost Reduction",
+          "description": "Evaluate competitive sourcing options for approved parts and recurring demand.",
+          "benefit": "Supports material cost targets without ignoring quality and documentation needs.",
+          "process": "Demand review, supplier comparison, pricing validation and quotation support."
+        },
+        {
+          "title": "Excess Inventory Management",
+          "description": "Prepare routes for surplus inventory evaluation and potential recovery.",
+          "benefit": "Helps organizations reduce inventory pressure and create structured remarketing workflows.",
+          "process": "Inventory review, categorization, demand matching and controlled commercial handling."
+        },
+        {
+          "title": "Supply Chain Optimization",
+          "description": "Support procurement planning, response processes and component availability visibility.",
+          "benefit": "Improves purchasing agility and reduces reactive sourcing pressure.",
+          "process": "Requirement mapping, bottleneck review, supplier routing and continuous feedback."
+        },
+        {
+          "title": "Global Procurement",
+          "description": "Coordinate international component purchasing with supplier qualification and commercial discipline.",
+          "benefit": "Expands access to supply while keeping process control in place.",
+          "process": "Regional sourcing, supplier checks, quotation management and logistics handoff."
+        },
+        {
+          "title": "Quality Assurance",
+          "description": "Apply inspection and documentation workflows before delivery.",
+          "benefit": "Reduces counterfeit, documentation and packaging risk.",
+          "process": "Supplier verification, incoming review, visual inspection, traceability and document checks."
+        }
+      ]
+    },
+    "market": {
+      "hero": {
+        "eyebrow": "Market insights",
+        "title": "Component market intelligence, ready for verified data",
+        "body": "A searchable, filterable hub prepared for real market analysis, shortage alerts and price trend reporting."
+      },
+      "searchLabel": "Search insights",
+      "filterLabel": "Filter by category",
+      "categories": [
+        "All",
+        "IC",
+        "Memory",
+        "DRAM",
+        "CPU",
+        "HDD",
+        "LCD",
+        "Supply Chain",
+        "Shortage Alerts",
+        "Price Trends"
+      ],
+      "articles": [
+        {
+          "category": "DRAM",
+          "title": "Demo: DRAM demand watch",
+          "summary": "Replace this demo article with verified market commentary from Quicksol's research or data partners."
+        },
+        {
+          "category": "Shortage Alerts",
+          "title": "Demo: Allocation monitoring workflow",
+          "summary": "A prepared content model for lead-time alerts, constrained components and customer advisories."
+        },
+        {
+          "category": "Price Trends",
+          "title": "Demo: Price trend brief",
+          "summary": "A replaceable article structure for category pricing updates after data validation."
+        }
+      ]
+    },
+    "brands": {
+      "hero": {
+        "eyebrow": "Brands and categories",
+        "title": "Prepared for verified component category data",
+        "body": "Explore categories Quicksol can support without presenting unverified inventory or unauthorized brand relationships."
+      },
+      "searchLabel": "Search categories",
+      "letterLabel": "Filter by letter",
+      "cta": "Looking for a specific part number?",
+      "categories": [
+        "IC",
+        "Memory",
+        "CPU",
+        "HDD",
+        "LCD",
+        "Passive Components",
+        "Active Components",
+        "Semiconductors",
+        "Connectors",
+        "Sensors",
+        "Power Management",
+        "Embedded Components"
+      ]
+    },
+    "quality": {
+      "hero": {
+        "eyebrow": "Quality and certifications",
+        "title": "Quality control built into sourcing workflows",
+        "body": "Quicksol's quality area is structured around inspection, supplier checks, traceability, packaging review and documentation discipline."
+      },
+      "process": [
+        {
+          "title": "Supplier verification",
+          "body": "Review supplier context, documentation and commercial fit before moving a request forward."
+        },
+        {
+          "title": "Incoming visual inspection",
+          "body": "Inspect visible condition, labels, packaging and part consistency."
+        },
+        {
+          "title": "Advanced inspection",
+          "body": "Route requests to microscope inspection or third-party laboratory testing when required."
+        },
+        {
+          "title": "Traceability and documents",
+          "body": "Organize records, packaging photos, lot details and compliance documentation where available."
+        },
+        {
+          "title": "Packaging review",
+          "body": "Check reels, trays, tubes, moisture sensitivity handling and shipment protection."
+        }
+      ],
+      "certifications": [
+        {
+          "title": "Certification records",
+          "body": "Publish verified certificates, registrations and compliance records here after approval."
+        },
+        {
+          "title": "Code of ethics",
+          "body": "Add applicable standards such as IDEA only if Quicksol confirms participation or compliance."
+        },
+        {
+          "title": "Download center",
+          "body": "Prepared for official PDFs including quality documents, terms and compliance resources."
+        }
+      ]
+    },
+    "valueAdded": {
+      "hero": {
+        "eyebrow": "Value-added services",
+        "title": "Additional services for component readiness",
+        "body": "Specialized services can support inspection, handling, preparation and documentation before parts enter production workflows."
+      },
+      "items": [
+        {
+          "title": "40x microscope inspection",
+          "description": "Detailed visual review for markings, leads, surface condition and packaging concerns.",
+          "when": "Used when higher confidence is required for critical or unfamiliar supply."
+        },
+        {
+          "title": "Vacuum sealing",
+          "description": "Moisture-conscious packaging support for sensitive components.",
+          "when": "Used before storage, shipment or controlled production release."
+        },
+        {
+          "title": "Baking",
+          "description": "Process preparation for moisture-sensitive parts when required by handling standards.",
+          "when": "Used when components need controlled preparation before assembly."
+        },
+        {
+          "title": "Tape and reel",
+          "description": "Packaging conversion support for automated assembly requirements.",
+          "when": "Used when production lines require reel-ready components."
+        },
+        {
+          "title": "Functional testing",
+          "description": "Testing coordination for selected part types and project requirements.",
+          "when": "Used when functional confirmation is needed before acceptance."
+        },
+        {
+          "title": "Third-party laboratory testing",
+          "description": "External lab routing for advanced authenticity or quality checks.",
+          "when": "Used for elevated risk, customer requirements or critical applications."
+        },
+        {
+          "title": "Programming",
+          "description": "Preparation support for programmable devices when specifications are confirmed.",
+          "when": "Used before delivery to assembly or engineering teams."
+        },
+        {
+          "title": "Repacking and labeling",
+          "description": "Controlled packaging, labeling and documentation support.",
+          "when": "Used when receiving, storage or traceability workflows require consistency."
+        }
+      ]
+    },
+    "global": {
+      "hero": {
+        "eyebrow": "Global presence",
+        "title": "Regional coverage without unverified office claims",
+        "body": "Quicksol's global page is prepared to publish confirmed regional contacts, offices and routing information."
+      },
+      "regions": [
+        {
+          "name": "Asia Pacific",
+          "body": "Prepared coverage for China, Singapore, Hong Kong, Korea, Japan, Malaysia, India and surrounding markets."
+        },
+        {
+          "name": "Americas",
+          "body": "Prepared coverage for Mexico, the United States and broader regional procurement support."
+        },
+        {
+          "name": "Europe",
+          "body": "Prepared coverage for France, Germany, the Netherlands and European sourcing coordination."
+        }
+      ],
+      "locations": [
+        "Singapore",
+        "Suzhou",
+        "Shenzhen",
+        "Shanghai",
+        "Chengdu",
+        "Beijing",
+        "Taiwan",
+        "Hong Kong",
+        "Hangzhou",
+        "Xiamen",
+        "Philippines",
+        "Malaysia",
+        "India",
+        "South Korea",
+        "Japan",
+        "Mexico",
+        "Boston",
+        "New York",
+        "Florida",
+        "Paris",
+        "Munich",
+        "Amsterdam"
+      ],
+      "notice": "Locations are shown as prepared regional routing labels and should be confirmed before publishing addresses, phone numbers or office claims."
+    },
+    "partners": {
+      "hero": {
+        "eyebrow": "Partners",
+        "title": "Trusted relationships, published responsibly",
+        "body": "This page is structured for approved partner, customer, manufacturer and logistics relationships without inventing logos or affiliations."
+      },
+      "principles": [
+        "Publish only authorized logos and partner names.",
+        "Separate customers, suppliers, logistics partners and certifications clearly.",
+        "Keep usage rights and approval records attached to each asset."
+      ]
+    },
+    "careers": {
+      "hero": {
+        "eyebrow": "Careers",
+        "title": "Join a global electronics supply chain team",
+        "body": "Quicksol's careers area is ready for hiring content across sourcing, quality, logistics, operations and commercial roles."
+      },
+      "sections": [
+        {
+          "title": "Work with precision",
+          "body": "Support customers that depend on speed, accuracy and quality-focused communication."
+        },
+        {
+          "title": "Build global relationships",
+          "body": "Collaborate across regions, suppliers and customers in the electronics supply chain."
+        },
+        {
+          "title": "Grow with future systems",
+          "body": "The architecture is ready for future job listings, team stories and application workflows."
+        }
+      ]
+    },
+    "portal": {
+      "hero": {
+        "eyebrow": "Future customer portal",
+        "title": "A secure digital workspace prepared for growth",
+        "body": "The portal page introduces future capabilities without activating unfinished functions."
+      },
+      "features": [
+        "Login",
+        "Upload BOM",
+        "Inventory search",
+        "RFQ tracking",
+        "AI assistant",
+        "Order tracking",
+        "Document center",
+        "Team collaboration"
+      ],
+      "notice": "Portal functions are not active yet. Authentication, permissions and data storage must be implemented before launch."
+    },
+    "legal": {
+      "terms": {
+        "hero": {
+          "eyebrow": "Legal",
+          "title": "Terms and Conditions",
+          "body": "This structure is ready for legal review before publication as official terms."
+        },
+        "sections": [
+          {
+            "title": "Commercial use",
+            "body": "Business terms, quotation validity, order acceptance and service limitations should be completed by authorized legal and commercial reviewers."
+          },
+          {
+            "title": "Product information",
+            "body": "Part numbers, availability, pricing and lead times should be treated as subject to confirmation unless contractually agreed."
+          },
+          {
+            "title": "Documents",
+            "body": "Official downloadable PDFs can be published here after review and approval."
+          }
+        ]
+      },
+      "privacy": {
+        "hero": {
+          "eyebrow": "Legal",
+          "title": "Privacy Policy",
+          "body": "This privacy structure explains how business inquiry and RFQ information should be handled after legal review."
+        },
+        "sections": [
+          {
+            "title": "Information collected",
+            "body": "Contact forms and RFQ submissions collect business contact details, company information, message content and optional BOM metadata."
+          },
+          {
+            "title": "Purpose",
+            "body": "Information should be used to respond to inquiries, prepare quotations, route requests and improve customer support."
+          },
+          {
+            "title": "Security",
+            "body": "Private keys must never be exposed in the browser, and integrations should use secure server-side handling."
+          }
+        ]
+      },
+      "cookies": {
+        "hero": {
+          "eyebrow": "Legal",
+          "title": "Cookies Policy",
+          "body": "This policy area is prepared for essential cookies, language preferences and future analytics consent controls."
+        },
+        "sections": [
+          {
+            "title": "Essential cookies",
+            "body": "Essential cookies may support language routing, security and basic site operation."
+          },
+          {
+            "title": "Analytics",
+            "body": "Analytics should be enabled only after the selected provider and consent requirements are confirmed."
+          },
+          {
+            "title": "Preference management",
+            "body": "A cookie preference center can be connected when tracking tools are approved."
+          }
+        ]
+      }
+    }
+  },
+  "forms": {
+    "shared": {
+      "success": "Thank you. Our global team will review your request and contact you shortly.",
+      "error": "The request could not be sent. Please review the form or try again later.",
+      "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "fileType": "Please upload an Excel, CSV or PDF file.",
+      "fileSize": "The file limit is 10 MB.",
+      "required": "This field is required.",
+      "consent": "I agree that Quicksol may process this information to respond to my business request.",
+      "honeypot": "Website"
+    },
+    "contact": {
+      "title": "Contact Quicksol",
+      "body": "Send a commercial, regional or general inquiry and the appropriate team will respond.",
+      "fields": {
+        "name": "Name",
+        "company": "Company",
+        "email": "Corporate email",
+        "phone": "Phone",
+        "country": "Country",
+        "region": "Region",
+        "requestType": "Type of request",
+        "message": "Message"
+      },
+      "regions": [
+        "Asia Pacific",
+        "Americas",
+        "Europe",
+        "Global team"
+      ],
+      "types": [
+        "Commercial inquiry",
+        "Sourcing support",
+        "Quality documentation",
+        "Regional contact",
+        "Partnership",
+        "Careers"
+      ]
+    },
+    "rfq": {
+      "title": "Request a Quote",
+      "body": "Share the part details, quantity, timing and optional BOM file for sourcing review.",
+      "final": "Thank you. Our global sourcing team will review your request and contact you shortly.",
+      "uploadHelp": "Accepted files: Excel, CSV or PDF. Maximum size: 10 MB.",
+      "fields": {
+        "company": "Company name",
+        "contactName": "Contact name",
+        "email": "Corporate email",
+        "phone": "Phone",
+        "country": "Country",
+        "partNumber": "Part number",
+        "manufacturer": "Manufacturer",
+        "quantity": "Quantity",
+        "targetPrice": "Target price",
+        "requiredDate": "Required date",
+        "bom": "Upload BOM",
+        "notes": "Additional notes"
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page may have moved, or the address may be incorrect.",
+    "action": "Go to home"
+  }
+}
