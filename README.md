@@ -16,3 +16,13 @@ Open `http://localhost:3000/en` or `http://localhost:3000/es`.
 - Localized routes are under `/en`, `/es`, `/zh`, `/fr`, `/de`, `/ja` and `/ko`.
 - Editable copy lives in `src/messages`.
 - Brand assets live in `public/logos` and `public/images`.
+
+## Render
+
+This repository includes `render.yaml` so Render deploys it as a Node web
+service instead of auto-detecting another runtime.
+
+- Runtime: Node
+- Build command: `npm ci && npm run build`
+- Start command: `npm run start`
+- Health check: `/en`
