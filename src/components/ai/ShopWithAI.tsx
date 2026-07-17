@@ -12,7 +12,10 @@ type AssistantResult = {
   id: string;
   title: string;
   mpn: string;
-  slug: string;
+  sku?: string;
+  slug?: string;
+  url?: string;
+  brand?: string | null;
   brand_name?: string | null;
 };
 
@@ -109,9 +112,22 @@ export function ShopWithAI({ locale }: { locale: string }) {
               {results.length ? (
                 <div className="grid gap-2">
                   {results.map((product) => (
-                    <Link key={product.id} href={localizedPath(locale as Locale, `/products/${product.slug}`)} className="rounded-md border border-slate-200 p-3 text-sm hover:border-orange-300">
+                    <Link
+                      key={product.id}
+                      href={
+                        product.url ||
+                        localizedPath(
+                          locale as Locale,
+                          `/products/${product.slug || ""}`,
+                        )
+                      }
+                      className="rounded-md border border-slate-200 p-3 text-sm hover:border-orange-300"
+                    >
                       <span className="block font-semibold text-slate-950">{product.title}</span>
-                      <span className="text-slate-600">{product.brand_name || "Quicksol"} · {product.mpn}</span>
+                      <span className="text-slate-600">
+                        {product.brand_name || product.brand || "Quicksol"} ·{" "}
+                        {product.mpn}
+                      </span>
                     </Link>
                   ))}
                 </div>

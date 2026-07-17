@@ -23,11 +23,21 @@ export async function searchProductsForAssistant(
   locale: Locale,
 ) {
   const parsed = searchProductsToolSchema.parse(input);
-  const referenceQuery = parsed.sku || parsed.mpn || parsed.query || parsed.manufacturer;
+  const extractedReference = parsed.query
+    ? extractLikelyPartReference(parsed.query)
+    : null;
+  const referenceQuery =
+    parsed.sku ||
+    parsed.mpn ||
+    extractedReference ||
+    parsed.query ||
+    parsed.manufacturer;
   const normalizedSku = parsed.sku ? normalizeComparableReference(parsed.sku) : null;
   const normalizedMpn = parsed.mpn ? normalizeComparableReference(parsed.mpn) : null;
-  const normalizedQuery = parsed.query ? normalizeComparableReference(parsed.query) : null;
-  const result = await searchCatalogProducts({
+  const normalizedQuery = referenceQuery
+    ? normalizeComparableReference(referenceQuery)
+    : null;
+  let result = await searchCatalogProducts({
     locale,
     query: referenceQuery,
     brand: parsed.brand,
@@ -35,6 +45,34 @@ export async function searchProductsForAssistant(
     condition: parsed.condition,
     availability: parsed.availability,
   });
+
+  if (!result.products.length && parsed.query) {
+    const fallbackProducts = new Map<string, (typeof result.products)[number]>();
+
+    for (const query of fallbackQueries(parsed.query, referenceQuery)) {
+      const fallbackResult = await searchCatalogProducts({
+        locale,
+        query,
+        brand: parsed.brand,
+        category: parsed.category,
+        condition: parsed.condition,
+        availability: parsed.availability,
+      });
+
+      for (const product of fallbackResult.products) {
+        fallbackProducts.set(product.id, product);
+      }
+    }
+
+    if (fallbackProducts.size) {
+      result = {
+        ...result,
+        products: [...fallbackProducts.values()],
+        count: fallbackProducts.size,
+        error: undefined,
+      };
+    }
+  }
   const sortedProducts = [...result.products].sort((a, b) => {
     const score = (product: (typeof result.products)[number]) => {
       const sku = normalizeComparableReference(product.sku);
@@ -58,6 +96,8 @@ export async function searchProductsForAssistant(
       sku: product.sku,
       mpn: product.mpn,
       brand: product.brand_name,
+      brand_name: product.brand_name,
+      slug: product.slug,
       url: `/${locale}/products/${product.slug}`,
       stock_status: product.stock_status,
       price_visible: product.price_visibility === "public",
@@ -75,4 +115,57 @@ function normalizeComparableReference(value: string) {
     .trim()
     .toUpperCase()
     .replace(/[^A-Z0-9]/g, "");
+}
+
+function extractLikelyPartReference(message: string) {
+  const references = message
+    .split(/[\s,;:()"'<>]+/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .filter((part) => /[A-Za-z]/.test(part) && /\d/.test(part))
+    .filter((part) => /[-_/]/.test(part) || part.length >= 6)
+    .sort((a, b) => b.length - a.length);
+
+  return references[0] || null;
+}
+
+function fallbackQueries(message: string, primaryQuery?: string | null) {
+  const stopWords = new Set([
+    "a",
+    "an",
+    "and",
+    "are",
+    "busco",
+    "con",
+    "de",
+    "el",
+    "for",
+    "i",
+    "la",
+    "los",
+    "me",
+    "need",
+    "necesito",
+    "para",
+    "please",
+    "product",
+    "producto",
+    "quiero",
+    "the",
+    "un",
+    "una",
+    "with",
+  ]);
+
+  return [
+    ...new Set(
+      message
+        .split(/[^A-Za-z0-9_-]+/)
+        .map((word) => word.trim())
+        .filter((word) => word.length >= 3)
+        .filter((word) => !stopWords.has(word.toLowerCase()))
+        .filter((word) => word !== primaryQuery)
+        .slice(0, 8),
+    ),
+  ];
 }
