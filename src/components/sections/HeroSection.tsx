@@ -1,9 +1,12 @@
-import { ArrowRight, MessageSquareText, Search } from "lucide-react";
+import { ArrowRight, ExternalLink, Link2, MessageSquareText, Search } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import type { Locale } from "@/lib/constants";
 import { localizedPath, type Dictionary } from "@/lib/dictionary";
 import { AnimatedWrapper } from "@/components/ui/AnimatedWrapper";
 import { HeroVideo } from "@/components/sections/HeroVideo";
+
+const quicksolLinkedInPostUrl =
+  "https://www.linkedin.com/posts/quiksol-global_workhardplayhard-melbourne-incentivetrip-activity-7478975884134100992-KQbW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAESKkT8BT6ARAgYmRxlPeoJwStMyvqr6diA";
 
 export function HeroSection({
   locale,
@@ -59,6 +62,17 @@ export function HeroSection({
                 {dict.common.cta.contact}
               </ButtonLink>
             </div>
+            <a
+              href={quicksolLinkedInPostUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Quicksol LinkedIn post"
+              className="focus-ring mt-5 inline-flex min-h-10 w-fit items-center gap-2 rounded-md border border-sky-300/35 bg-white/8 px-4 py-2 text-sm font-semibold text-sky-100 transition duration-200 hover:border-sky-200 hover:bg-white/14 hover:text-white"
+            >
+              <Link2 aria-hidden="true" className="h-4 w-4" />
+              <span>LinkedIn Quicksol</span>
+              <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
+            </a>
           </AnimatedWrapper>
         </div>
       </div>
