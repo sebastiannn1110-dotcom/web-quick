@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "import:digikey": "node scripts/import-digikey-products.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
