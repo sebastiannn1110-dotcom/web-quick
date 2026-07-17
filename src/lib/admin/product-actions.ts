@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createCheckedAdminClient } from "./access";
+import { locales } from "@/lib/constants";
 
 const optionalNumber = z
   .string()
@@ -97,6 +98,43 @@ function formValue(formData: FormData, key: string) {
   return typeof value === "string" ? value : "";
 }
 
+function optionalUrlValue(formData: FormData, key: string) {
+  const value = formValue(formData, key).trim();
+
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const url = new URL(value);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      throw new Error("Unsupported protocol");
+    }
+
+    return url.toString();
+  } catch {
+    throw new Error(`${key} must be a valid HTTP or HTTPS URL.`);
+  }
+}
+
+function primaryImagePayload(formData: FormData, title: string) {
+  const publicUrl = optionalUrlValue(formData, "primary_image_url");
+  const altText = formValue(formData, "primary_image_alt").trim() || title;
+
+  if (!publicUrl) {
+    return null;
+  }
+
+  return {
+    public_url: publicUrl,
+    alt_text: altText,
+    storage_path: `external:${publicUrl}`,
+    sort_order: 0,
+    is_primary: true,
+  };
+}
+
 function productPayload(formData: FormData) {
   const parsed = productSchema.parse({
     sku: formValue(formData, "sku"),
@@ -165,6 +203,47 @@ async function logAdminAudit(
   });
 }
 
+async function savePrimaryProductImage(
+  supabase: NonNullable<Awaited<ReturnType<typeof createCheckedAdminClient>>["supabase"]>,
+  productId: string,
+  image: ReturnType<typeof primaryImagePayload>,
+) {
+  const { error: deleteError } = await supabase
+    .from("product_images")
+    .delete()
+    .eq("product_id", productId)
+    .eq("is_primary", true);
+
+  if (deleteError) {
+    throw deleteError;
+  }
+
+  if (!image) {
+    return;
+  }
+
+  const { error: insertError } = await supabase.from("product_images").insert({
+    product_id: productId,
+    ...image,
+  });
+
+  if (insertError) {
+    throw insertError;
+  }
+}
+
+function revalidateProductPublicPaths(slugs: Array<string | null | undefined>) {
+  const uniqueSlugs = [...new Set(slugs.filter(Boolean))] as string[];
+
+  for (const item of locales) {
+    revalidatePath(`/${item}/catalog`);
+
+    for (const slug of uniqueSlugs) {
+      revalidatePath(`/${item}/products/${slug}`);
+    }
+  }
+}
+
 export async function createProductAction(formData: FormData) {
   const locale = formValue(formData, "locale") || "en";
   const { supabase, access } = await createCheckedAdminClient();
@@ -177,9 +256,12 @@ export async function createProductAction(formData: FormData) {
 
   try {
     payload = productPayload(formData);
+    primaryImagePayload(formData, payload.title);
   } catch {
     redirect(`/${locale}/admin/products/new?error=invalid_product`);
   }
+
+  const primaryImage = primaryImagePayload(formData, payload.title);
 
   const { data, error } = await supabase
     .from("products")
@@ -191,12 +273,18 @@ export async function createProductAction(formData: FormData) {
     redirect(`/${locale}/admin/products/new?error=save_failed`);
   }
 
+  try {
+    await savePrimaryProductImage(supabase, data.id, primaryImage);
+  } catch {
+    redirect(`/${locale}/admin/products/new?error=image_save_failed`);
+  }
+
   await logAdminAudit(supabase, access.user?.id, "product_created", data?.id || null, {
     status: payload.status,
     price_visibility: payload.price_visibility,
   });
 
-  revalidatePath(`/${locale}/catalog`);
+  revalidateProductPublicPaths([payload.slug]);
   redirect(`/${locale}/admin/products`);
 }
 
@@ -210,12 +298,20 @@ export async function updateProductAction(formData: FormData) {
   }
 
   let payload: ReturnType<typeof productPayload>;
+  const { data: existingProduct } = await supabase
+    .from("products")
+    .select("slug")
+    .eq("id", id)
+    .maybeSingle();
 
   try {
     payload = productPayload(formData);
+    primaryImagePayload(formData, payload.title);
   } catch {
     redirect(`/${locale}/admin/products/${id}?error=invalid_product`);
   }
+
+  const primaryImage = primaryImagePayload(formData, payload.title);
 
   const { error } = await supabase
     .from("products")
@@ -226,13 +322,19 @@ export async function updateProductAction(formData: FormData) {
     redirect(`/${locale}/admin/products/${id}?error=save_failed`);
   }
 
+  try {
+    await savePrimaryProductImage(supabase, id, primaryImage);
+  } catch {
+    redirect(`/${locale}/admin/products/${id}?error=image_save_failed`);
+  }
+
   await logAdminAudit(supabase, access.user?.id, "product_updated", id, {
     status: payload.status,
     stock_status: payload.stock_status,
     price_visibility: payload.price_visibility,
   });
 
-  revalidatePath(`/${locale}/catalog`);
+  revalidateProductPublicPaths([existingProduct?.slug, payload.slug]);
   redirect(`/${locale}/admin/products`);
 }
 
@@ -245,6 +347,12 @@ export async function setProductStatusAction(formData: FormData) {
   if (!supabase || !id || !["draft", "published", "archived"].includes(status)) {
     redirect(`/${locale}/admin/products?error=protected`);
   }
+
+  const { data: product } = await supabase
+    .from("products")
+    .select("slug")
+    .eq("id", id)
+    .maybeSingle();
 
   const { error } = await supabase
     .from("products")
@@ -264,6 +372,6 @@ export async function setProductStatusAction(formData: FormData) {
     status,
   });
 
-  revalidatePath(`/${locale}/catalog`);
+  revalidateProductPublicPaths([product?.slug]);
   redirect(`/${locale}/admin/products`);
 }

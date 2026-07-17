@@ -98,6 +98,28 @@ export function ProductForm({
       </fieldset>
 
       <fieldset className="grid gap-4">
+        <legend className="text-lg font-semibold text-slate-950">Media</legend>
+        <label className="grid gap-2 text-sm font-semibold text-slate-700">
+          Product image URL
+          <input
+            name="primary_image_url"
+            type="url"
+            placeholder="https://..."
+            defaultValue={value(product, "primary_image_url")}
+            className="h-11 rounded-md border border-slate-200 px-3 font-normal"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-semibold text-slate-700">
+          Image alt text
+          <input
+            name="primary_image_alt"
+            defaultValue={value(product, "primary_image_alt")}
+            className="h-11 rounded-md border border-slate-200 px-3 font-normal"
+          />
+        </label>
+      </fieldset>
+
+      <fieldset className="grid gap-4">
         <legend className="text-lg font-semibold text-slate-950">Price and availability</legend>
         <div className="grid gap-4 md:grid-cols-2">
           {[
