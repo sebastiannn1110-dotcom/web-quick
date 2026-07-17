@@ -19,16 +19,16 @@ export function PageHero({
   secondaryLabel?: string;
 }) {
   return (
-    <section className="dark-panel grid-lines text-white">
-      <div className="container-page py-20 md:py-28">
+    <section className="border-b border-slate-200 bg-white">
+      <div className="container-page py-10 md:py-16">
         <div className="max-w-4xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-orange-700">
             {eyebrow}
           </p>
-          <h1 className="text-4xl font-semibold tracking-normal md:text-6xl">
+          <h1 className="text-3xl font-semibold text-slate-950 md:text-5xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-200">
+          <p className="mt-4 max-w-3xl text-base leading-8 text-slate-700 md:text-lg">
             {body}
           </p>
           {primaryLabel || secondaryLabel ? (
