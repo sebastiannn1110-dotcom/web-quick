@@ -12,7 +12,11 @@ export default async function EditProductPage({ params }: PageProps) {
 
   if (blocked) return blocked;
 
-  const { data } = await supabase!.from("products").select("*").eq("id", id).maybeSingle();
+  const [{ data }, { data: brands }, { data: categories }] = await Promise.all([
+    supabase!.from("products").select("*").eq("id", id).maybeSingle(),
+    supabase!.from("brands").select("id,name").order("name", { ascending: true }),
+    supabase!.from("categories").select("id,name").order("sort_order", { ascending: true }),
+  ]);
 
   if (!data) notFound();
 
@@ -20,7 +24,7 @@ export default async function EditProductPage({ params }: PageProps) {
     <section className="section-y bg-slate-50">
       <div className="container-page max-w-4xl space-y-6">
         <h1 className="text-3xl font-semibold text-slate-950">Edit product</h1>
-        <ProductForm locale={locale} product={data} />
+        <ProductForm locale={locale} product={data} brands={brands || []} categories={categories || []} />
       </div>
     </section>
   );

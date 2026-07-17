@@ -12,22 +12,84 @@ const optionalNumber = z
   .transform((value) => (value ? Number(value) : null))
   .pipe(z.number().finite().nonnegative().nullable());
 
+const optionalId = z
+  .string()
+  .trim()
+  .optional()
+  .transform((value) => (value ? value : null))
+  .pipe(z.string().uuid().nullable());
+
+const optionalText = z
+  .string()
+  .trim()
+  .optional()
+  .transform((value) => value || null);
+
+const specificationsSchema = z
+  .string()
+  .trim()
+  .optional()
+  .transform((value, ctx) => {
+    if (!value) {
+      return {};
+    }
+
+    try {
+      const parsed = JSON.parse(value);
+
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Specifications must be a JSON object.",
+        });
+        return z.NEVER;
+      }
+
+      return parsed as Record<string, unknown>;
+    } catch {
+      ctx.addIssue({
+        code: "custom",
+        message: "Specifications must be valid JSON.",
+      });
+      return z.NEVER;
+    }
+  });
+
 const productSchema = z.object({
   sku: z.string().trim().min(2).max(120),
   mpn: z.string().trim().min(2).max(160),
   slug: z.string().trim().min(2).max(180),
   title: z.string().trim().min(2).max(240),
-  short_description: z.string().trim().max(500).optional(),
-  description: z.string().trim().max(4000).optional(),
-  manufacturer_name: z.string().trim().max(180).optional(),
+  short_description: optionalText,
+  description: optionalText,
+  manufacturer_name: optionalText,
+  brand_id: optionalId,
+  category_id: optionalId,
   status: z.enum(["draft", "published", "archived"]),
   visibility: z.enum(["public", "authenticated"]),
+  featured: z.boolean(),
   currency: z.string().trim().min(3).max(3),
   price: optionalNumber,
+  compare_at_price: optionalNumber,
   price_visibility: z.enum(["public", "authenticated", "quote_only"]),
   stock_quantity: optionalNumber,
-  stock_status: z.enum(["in_stock", "limited", "out_of_stock", "quote"]),
+  stock_status: z.enum([
+    "in_stock",
+    "low_stock",
+    "out_of_stock",
+    "on_request",
+    "discontinued",
+    "limited",
+    "quote",
+  ]),
   minimum_order_quantity: optionalNumber,
+  lead_time_min_days: optionalNumber,
+  lead_time_max_days: optionalNumber,
+  condition: optionalText,
+  packaging: optionalText,
+  country_of_origin: optionalText,
+  datasheet_url: optionalText,
+  specifications: specificationsSchema,
 });
 
 function formValue(formData: FormData, key: string) {
@@ -44,14 +106,25 @@ function productPayload(formData: FormData) {
     short_description: formValue(formData, "short_description"),
     description: formValue(formData, "description"),
     manufacturer_name: formValue(formData, "manufacturer_name"),
+    brand_id: formValue(formData, "brand_id"),
+    category_id: formValue(formData, "category_id"),
     status: formValue(formData, "status") || "draft",
     visibility: formValue(formData, "visibility") || "public",
+    featured: formData.get("featured") === "on",
     currency: formValue(formData, "currency") || "USD",
     price: formValue(formData, "price"),
+    compare_at_price: formValue(formData, "compare_at_price"),
     price_visibility: formValue(formData, "price_visibility") || "quote_only",
     stock_quantity: formValue(formData, "stock_quantity"),
-    stock_status: formValue(formData, "stock_status") || "quote",
+    stock_status: formValue(formData, "stock_status") || "on_request",
     minimum_order_quantity: formValue(formData, "minimum_order_quantity") || "1",
+    lead_time_min_days: formValue(formData, "lead_time_min_days"),
+    lead_time_max_days: formValue(formData, "lead_time_max_days"),
+    condition: formValue(formData, "condition"),
+    packaging: formValue(formData, "packaging"),
+    country_of_origin: formValue(formData, "country_of_origin"),
+    datasheet_url: formValue(formData, "datasheet_url"),
+    specifications: formValue(formData, "specifications"),
   });
 
   return {
@@ -61,23 +134,67 @@ function productPayload(formData: FormData) {
       parsed.minimum_order_quantity === null
         ? 1
         : Math.max(1, Math.trunc(parsed.minimum_order_quantity)),
+    lead_time_min_days:
+      parsed.lead_time_min_days === null
+        ? null
+        : Math.trunc(parsed.lead_time_min_days),
+    lead_time_max_days:
+      parsed.lead_time_max_days === null
+        ? null
+        : Math.trunc(parsed.lead_time_max_days),
+    embedding_status:
+      parsed.status === "published" ? "pending" : "disabled",
     published_at: parsed.status === "published" ? new Date().toISOString() : null,
+    archived_at: parsed.status === "archived" ? new Date().toISOString() : null,
   };
+}
+
+async function logAdminAudit(
+  supabase: NonNullable<Awaited<ReturnType<typeof createCheckedAdminClient>>["supabase"]>,
+  actorId: string | undefined,
+  action: string,
+  entityId: string | null,
+  metadata: Record<string, unknown> = {},
+) {
+  await supabase.from("admin_audit_logs").insert({
+    actor_id: actorId || null,
+    action,
+    entity_type: "product",
+    entity_id: entityId,
+    metadata,
+  });
 }
 
 export async function createProductAction(formData: FormData) {
   const locale = formValue(formData, "locale") || "en";
-  const { supabase } = await createCheckedAdminClient();
+  const { supabase, access } = await createCheckedAdminClient();
 
   if (!supabase) {
     redirect(`/${locale}/admin/products?error=protected`);
   }
 
-  const { error } = await supabase.from("products").insert(productPayload(formData));
+  let payload: ReturnType<typeof productPayload>;
+
+  try {
+    payload = productPayload(formData);
+  } catch {
+    redirect(`/${locale}/admin/products/new?error=invalid_product`);
+  }
+
+  const { data, error } = await supabase
+    .from("products")
+    .insert(payload)
+    .select("id")
+    .single();
 
   if (error) {
     redirect(`/${locale}/admin/products/new?error=save_failed`);
   }
+
+  await logAdminAudit(supabase, access.user?.id, "product_created", data?.id || null, {
+    status: payload.status,
+    price_visibility: payload.price_visibility,
+  });
 
   revalidatePath(`/${locale}/catalog`);
   redirect(`/${locale}/admin/products`);
@@ -86,20 +203,34 @@ export async function createProductAction(formData: FormData) {
 export async function updateProductAction(formData: FormData) {
   const id = formValue(formData, "id");
   const locale = formValue(formData, "locale") || "en";
-  const { supabase } = await createCheckedAdminClient();
+  const { supabase, access } = await createCheckedAdminClient();
 
   if (!supabase || !id) {
     redirect(`/${locale}/admin/products?error=protected`);
   }
 
+  let payload: ReturnType<typeof productPayload>;
+
+  try {
+    payload = productPayload(formData);
+  } catch {
+    redirect(`/${locale}/admin/products/${id}?error=invalid_product`);
+  }
+
   const { error } = await supabase
     .from("products")
-    .update(productPayload(formData))
+    .update(payload)
     .eq("id", id);
 
   if (error) {
     redirect(`/${locale}/admin/products/${id}?error=save_failed`);
   }
+
+  await logAdminAudit(supabase, access.user?.id, "product_updated", id, {
+    status: payload.status,
+    stock_status: payload.stock_status,
+    price_visibility: payload.price_visibility,
+  });
 
   revalidatePath(`/${locale}/catalog`);
   redirect(`/${locale}/admin/products`);
@@ -109,7 +240,7 @@ export async function setProductStatusAction(formData: FormData) {
   const id = formValue(formData, "id");
   const locale = formValue(formData, "locale") || "en";
   const status = formValue(formData, "status");
-  const { supabase } = await createCheckedAdminClient();
+  const { supabase, access } = await createCheckedAdminClient();
 
   if (!supabase || !id || !["draft", "published", "archived"].includes(status)) {
     redirect(`/${locale}/admin/products?error=protected`);
@@ -120,12 +251,18 @@ export async function setProductStatusAction(formData: FormData) {
     .update({
       status,
       published_at: status === "published" ? new Date().toISOString() : null,
+      archived_at: status === "archived" ? new Date().toISOString() : null,
+      embedding_status: status === "published" ? "pending" : "disabled",
     })
     .eq("id", id);
 
   if (error) {
     redirect(`/${locale}/admin/products?error=save_failed`);
   }
+
+  await logAdminAudit(supabase, access.user?.id, `product_${status}`, id, {
+    status,
+  });
 
   revalidatePath(`/${locale}/catalog`);
   redirect(`/${locale}/admin/products`);

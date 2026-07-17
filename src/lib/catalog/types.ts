@@ -5,7 +5,9 @@ export type ProductPriceVisibility = "public" | "authenticated" | "quote_only";
 export type CatalogProduct = {
   id: string;
   sku: string;
+  sku_normalized?: string | null;
   mpn: string;
+  mpn_normalized?: string | null;
   slug: string;
   title: string;
   short_description: string | null;
@@ -53,4 +55,3 @@ export type CatalogResult = {
   configured: boolean;
   error?: string;
 };
-

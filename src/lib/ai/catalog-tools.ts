@@ -6,6 +6,8 @@ import type { Locale } from "@/lib/constants";
 
 export const searchProductsToolSchema = z.object({
   query: z.string().trim().max(200).optional(),
+  sku: z.string().trim().max(120).optional(),
+  mpn: z.string().trim().max(160).optional(),
   brand: z.string().trim().max(120).optional(),
   category: z.string().trim().max(120).optional(),
   manufacturer: z.string().trim().max(120).optional(),
@@ -21,18 +23,36 @@ export async function searchProductsForAssistant(
   locale: Locale,
 ) {
   const parsed = searchProductsToolSchema.parse(input);
+  const referenceQuery = parsed.sku || parsed.mpn || parsed.query || parsed.manufacturer;
+  const normalizedSku = parsed.sku ? normalizeComparableReference(parsed.sku) : null;
+  const normalizedMpn = parsed.mpn ? normalizeComparableReference(parsed.mpn) : null;
+  const normalizedQuery = parsed.query ? normalizeComparableReference(parsed.query) : null;
   const result = await searchCatalogProducts({
     locale,
-    query: parsed.query || parsed.manufacturer,
+    query: referenceQuery,
     brand: parsed.brand,
     category: parsed.category,
     condition: parsed.condition,
     availability: parsed.availability,
   });
+  const sortedProducts = [...result.products].sort((a, b) => {
+    const score = (product: (typeof result.products)[number]) => {
+      const sku = normalizeComparableReference(product.sku);
+      const mpn = normalizeComparableReference(product.mpn);
+
+      if (normalizedSku && sku === normalizedSku) return 0;
+      if (normalizedMpn && mpn === normalizedMpn) return 1;
+      if (normalizedQuery && (sku === normalizedQuery || mpn === normalizedQuery)) return 2;
+      if (normalizedQuery && (sku.includes(normalizedQuery) || mpn.includes(normalizedQuery))) return 3;
+      return 4;
+    };
+
+    return score(a) - score(b);
+  });
 
   return {
     configured: result.configured,
-    products: result.products.slice(0, parsed.limit).map((product) => ({
+    products: sortedProducts.slice(0, parsed.limit).map((product) => ({
       id: product.id,
       title: product.title,
       sku: product.sku,
@@ -50,3 +70,9 @@ export async function searchProductsForAssistant(
   };
 }
 
+function normalizeComparableReference(value: string) {
+  return value
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+}

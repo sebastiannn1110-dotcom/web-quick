@@ -14,6 +14,14 @@ function clientKey(request: NextRequest) {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
 }
 
+function noResultsMessage(locale: Locale) {
+  if (locale === "es") {
+    return "No encontré esa referencia en el catálogo publicado de Quicksol.";
+  }
+
+  return "I could not find that reference in Quicksol's published catalog.";
+}
+
 export async function POST(request: NextRequest) {
   if (!rateLimit(`ai:${clientKey(request)}`, 12, 60_000)) {
     return NextResponse.json(
@@ -31,12 +39,21 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!process.env.OPENAI_API_KEY) {
-    const results = await searchProductsForAssistant(
-      { query: parsed.data.message, limit: 5 },
-      parsed.data.locale as Locale,
-    );
+  const results = await searchProductsForAssistant(
+    { query: parsed.data.message, limit: 5 },
+    parsed.data.locale as Locale,
+  );
 
+  if (!results.products.length) {
+    return NextResponse.json({
+      ok: true,
+      mode: "search_only",
+      message: noResultsMessage(parsed.data.locale as Locale),
+      results,
+    });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
     return NextResponse.json({
       ok: true,
       mode: "search_only",
@@ -45,11 +62,6 @@ export async function POST(request: NextRequest) {
       results,
     });
   }
-
-  const results = await searchProductsForAssistant(
-    { query: parsed.data.message, limit: 5 },
-    parsed.data.locale as Locale,
-  );
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const response = await client.responses.create({
@@ -75,4 +87,3 @@ export async function POST(request: NextRequest) {
     results,
   });
 }
-
