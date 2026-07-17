@@ -6,10 +6,9 @@ import { getSupabasePublicConfig } from "./config";
 export function createBrowserSupabaseClient() {
   const config = getSupabasePublicConfig();
 
-  if (!config.url || !config.anonKey) {
-    throw new Error("Supabase public environment variables are not configured.");
+  if (!config.url || !config.publicKey || !config.isConfigured) {
+    throw new Error("Supabase public key is missing or invalid");
   }
 
-  return createBrowserClient(config.url, config.anonKey);
+  return createBrowserClient(config.url, config.publicKey);
 }
-

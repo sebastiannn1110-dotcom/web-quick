@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { FeatureShell } from "@/components/dashboard/FeatureShell";
 import { StatusPanel } from "@/components/catalog/StatusPanel";
-import { createServerSupabaseClient, getCurrentUser } from "@/lib/supabase/server";
+import { getAdminAccess } from "@/lib/admin/access";
+import type { Locale } from "@/lib/constants";
+import { localizedPath } from "@/lib/dictionary";
 
 export const metadata = {
   robots: {
@@ -9,36 +12,11 @@ export const metadata = {
   },
 };
 
-async function getAdminAccess(userId?: string) {
-  if (!userId) {
-    return { allowed: false, configured: true };
-  }
+type PageProps = { params: Promise<{ locale: string }> };
 
-  const supabase = await createServerSupabaseClient();
-
-  if (!supabase) {
-    return { allowed: false, configured: false };
-  }
-
-  const { data } = await supabase
-    .from("profiles")
-    .select("role,status")
-    .eq("id", userId)
-    .maybeSingle();
-
-  return {
-    allowed:
-      data?.status === "active" &&
-      (data.role === "admin" || data.role === "super_admin"),
-    configured: true,
-  };
-}
-
-export default async function AdminPage() {
-  const { user, configured } = await getCurrentUser();
-  const access = configured
-    ? await getAdminAccess(user?.id)
-    : { allowed: false, configured: false };
+export default async function AdminPage({ params }: PageProps) {
+  const { locale } = await params;
+  const access = await getAdminAccess();
 
   return (
     <FeatureShell
@@ -59,23 +37,23 @@ export default async function AdminPage() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {[
-            "Products",
-            "Bulk import",
-            "Categories",
-            "Brands",
-            "RFQs",
-            "Orders",
-            "Users",
-            "LinkedIn",
-            "Audit logs",
-          ].map((item) => (
-            <div key={item} className="rounded-md border border-slate-200 bg-white p-6 shadow-sm">
+            ["Products", "/admin/products"],
+            ["Categories", "/admin/categories"],
+            ["Brands", "/admin/brands"],
+            ["RFQs", "/admin/rfqs"],
+            ["Contacts", "/admin/contacts"],
+            ["Orders", "/admin/orders"],
+            ["Customers", "/admin/customers"],
+            ["Media", "/admin/media"],
+            ["Settings", "/admin/settings"],
+          ].map(([item, href]) => (
+            <Link key={item} href={localizedPath(locale as Locale, href)} className="rounded-md border border-slate-200 bg-white p-6 shadow-sm transition hover:border-orange-300">
               <h2 className="text-xl font-semibold text-slate-950">{item}</h2>
               <p className="mt-3 text-sm leading-7 text-slate-600">
                 Server-protected module. Mutations must use RLS-safe server
                 actions and audit logs.
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       )}

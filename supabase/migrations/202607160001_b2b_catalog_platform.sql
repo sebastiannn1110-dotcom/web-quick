@@ -30,6 +30,7 @@ create table if not exists public.profiles (
   preferred_locale text not null default 'en',
   role text not null default 'customer' check (role in ('customer', 'admin', 'super_admin')),
   status text not null default 'active' check (status in ('active', 'disabled', 'pending')),
+  receive_notifications boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -192,7 +193,27 @@ create table if not exists public.rfq_requests (
   country text not null,
   message text,
   status text not null default 'new' check (status in ('new', 'reviewing', 'quoted', 'converted', 'closed')),
+  notification_status text not null default 'pending' check (notification_status in ('pending', 'sent', 'failed', 'disabled')),
+  notification_error text,
+  notified_at timestamptz,
   currency text not null default 'USD',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.contact_requests (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  company_name text not null,
+  email text not null,
+  phone text,
+  country text not null,
+  message text not null,
+  locale text not null default 'en',
+  status text not null default 'new' check (status in ('new', 'reviewing', 'closed')),
+  notification_status text not null default 'pending' check (notification_status in ('pending', 'sent', 'failed', 'disabled')),
+  notification_error text,
+  notified_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -280,7 +301,7 @@ begin
   foreach table_name in array array[
     'profiles','categories','brands','products','product_translations',
     'product_images','product_videos','product_documents','carts','cart_items',
-    'rfq_requests','rfq_items','orders','linkedin_posts','corporate_videos'
+    'contact_requests','rfq_requests','rfq_items','orders','linkedin_posts','corporate_videos'
   ]
   loop
     execute format('drop trigger if exists set_%I_updated_at on public.%I', table_name, table_name);
@@ -392,7 +413,7 @@ begin
   foreach table_name in array array[
     'profiles','categories','brands','products','product_translations',
     'product_images','product_videos','product_documents','favorites','carts',
-    'cart_items','rfq_requests','rfq_items','orders','order_items',
+    'cart_items','contact_requests','rfq_requests','rfq_items','orders','order_items',
     'linkedin_posts','corporate_videos','admin_audit_logs'
   ]
   loop
@@ -492,6 +513,18 @@ for select using (user_id = auth.uid() or public.is_admin());
 
 drop policy if exists "admin manage rfq" on public.rfq_requests;
 create policy "admin manage rfq" on public.rfq_requests
+for update using (public.is_admin()) with check (public.is_admin());
+
+drop policy if exists "public create contact requests" on public.contact_requests;
+create policy "public create contact requests" on public.contact_requests
+for insert with check (true);
+
+drop policy if exists "admin read contact requests" on public.contact_requests;
+create policy "admin read contact requests" on public.contact_requests
+for select using (public.is_admin());
+
+drop policy if exists "admin manage contact requests" on public.contact_requests;
+create policy "admin manage contact requests" on public.contact_requests
 for update using (public.is_admin()) with check (public.is_admin());
 
 drop policy if exists "users read own orders" on public.orders;

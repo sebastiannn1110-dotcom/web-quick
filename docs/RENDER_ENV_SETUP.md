@@ -5,9 +5,13 @@
 | `NEXT_PUBLIC_SITE_URL` | Yes | Web | SEO, sitemap | Open `/sitemap.xml` and check host |
 | `CRM_WEBHOOK_URL` | No | Web | Contact/RFQ forwarding | Submit staging form and check CRM receipt |
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Web | Browser/server Supabase | Catalog no longer shows setup state |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Yes | Web | Browser/server Supabase | Preferred public key name; app also accepts anon key fallback |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Web | Browser/server Supabase | Auth and public catalog can initialize |
 | `SUPABASE_SERVICE_ROLE_KEY` | No | Web only | Admin server-only operations | Admin diagnostics pass server-side |
 | `SUPABASE_DATABASE_URL` | No | Migration runner/operator | SQL migrations | Migration command connects |
+| `RESEND_API_KEY` | No | Web | Contact/RFQ email notifications | Requests persist even if email fails; notification status records failure |
+| `EMAIL_FROM` | No | Web | Contact/RFQ email notifications | Resend accepts sender domain |
+| `ADMIN_NOTIFICATION_EMAILS` | No | Web | Internal sales/admin notifications | Comma-separated recipients receive form alerts |
 | `OPENAI_API_KEY` | No | Web | Catalog assistant | `/api/ai/catalog` returns `mode=openai` |
 | `OPENAI_MODEL` | No | Web | Catalog assistant | Assistant response metadata/logs |
 | `OPENAI_EMBEDDING_MODEL` | No | Worker/operator | Embeddings | Embedding job uses configured model |
@@ -22,4 +26,3 @@
 | `ADMIN_BOOTSTRAP_EMAILS` | No | Operator/bootstrap | First admin setup | Bootstrap script lists allowed emails only |
 | `MAX_IMAGE_UPLOAD_MB` | No | Web | Upload validation | Oversized image rejected |
 | `MAX_VIDEO_UPLOAD_MB` | No | Web | Upload validation | Oversized video rejected |
-

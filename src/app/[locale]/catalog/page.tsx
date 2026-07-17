@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { CatalogFilters } from "@/components/catalog/CatalogFilters";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { StatusPanel } from "@/components/catalog/StatusPanel";
-import { PageHero } from "@/components/sections/PageHero";
 import { locales, type Locale } from "@/lib/constants";
 import { getCatalogFacets, searchCatalogProducts } from "@/lib/catalog/search";
 import { getDictionary, isLocale } from "@/lib/dictionary";
@@ -58,17 +57,34 @@ export default async function CatalogPage({ params, searchParams }: PageProps) {
     getCatalogFacets(),
   ]);
 
+  if (result.error) {
+    console.error("Catalog load failed", result.error);
+  }
+
   return (
     <>
-      <PageHero
-        eyebrow={dict.common.nav.brands}
-        title="Catalog of electronic components"
-        body="Search public Quicksol inventory and request quotes for exact or related components. Private prices remain hidden until authentication and authorization are active."
-        locale={locale}
-        primaryLabel={dict.common.cta.submitRfq}
-        secondaryLabel={dict.common.cta.contact}
-      />
-      <section className="section-y bg-slate-50">
+      <section className="border-b border-slate-200 bg-white py-8">
+        <div className="container-page space-y-3">
+          <p className="text-sm font-semibold uppercase tracking-wide text-orange-700">
+            {dict.common.nav.brands}
+          </p>
+          <div className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <h1 className="text-3xl font-semibold text-slate-950 md:text-4xl">
+                Electronic components catalog
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Search published inventory by MPN, SKU, brand, category and
+                availability. Prices and private inventory stay protected.
+              </p>
+            </div>
+            <p className="rounded-md border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
+              {result.count} results
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="section-y bg-slate-50 pt-8">
         <div className="container-page space-y-8">
           <CatalogFilters
             query={filters.query}
@@ -90,7 +106,7 @@ export default async function CatalogPage({ params, searchParams }: PageProps) {
             <StatusPanel
               tone="error"
               title="Catalog could not be loaded"
-              body={result.error}
+              body="The catalog service is temporarily unavailable. Try again or send an RFQ with the exact manufacturer part number."
             />
           ) : result.products.length ? (
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -109,4 +125,3 @@ export default async function CatalogPage({ params, searchParams }: PageProps) {
     </>
   );
 }
-

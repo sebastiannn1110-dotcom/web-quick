@@ -20,10 +20,9 @@ export default async function ContactPage({ params }: PageProps) {
       />
       <section className="section-y bg-slate-50">
         <div className="container-page max-w-4xl">
-          <ContactForm />
+          <ContactForm locale={locale} />
         </div>
       </section>
     </>
   );
 }
-

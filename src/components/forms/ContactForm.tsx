@@ -4,7 +4,13 @@ import { useState } from "react";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-export function ContactForm({ type = "contact" }: { type?: "contact" | "rfq" }) {
+export function ContactForm({
+  type = "contact",
+  locale = "en",
+}: {
+  type?: "contact" | "rfq";
+  locale?: string;
+}) {
   const [state, setState] = useState<FormState>("idle");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -37,6 +43,7 @@ export function ContactForm({ type = "contact" }: { type?: "contact" | "rfq" }) 
       onSubmit={handleSubmit}
       className="grid gap-4 rounded-md border border-slate-200 bg-white p-6 shadow-sm"
     >
+      <input type="hidden" name="locale" value={locale} />
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2 text-sm font-semibold text-slate-700">
@@ -134,4 +141,3 @@ export function ContactForm({ type = "contact" }: { type?: "contact" | "rfq" }) 
     </form>
   );
 }
-

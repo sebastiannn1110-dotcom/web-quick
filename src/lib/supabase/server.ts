@@ -7,13 +7,13 @@ import { getSupabasePublicConfig } from "./config";
 export async function createServerSupabaseClient() {
   const config = getSupabasePublicConfig();
 
-  if (!config.url || !config.anonKey) {
+  if (!config.url || !config.publicKey || !config.isConfigured) {
     return null;
   }
 
   const cookieStore = await cookies();
 
-  return createServerClient(config.url, config.anonKey, {
+  return createServerClient(config.url, config.publicKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -45,4 +45,3 @@ export async function getCurrentUser() {
 
   return { user, configured: true };
 }
-

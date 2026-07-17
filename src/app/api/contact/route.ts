@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { rateLimit } from "@/lib/rate-limit";
-import { forwardSubmission } from "@/lib/submissions";
+import { forwardSubmission, saveContactSubmission } from "@/lib/submissions";
 import { contactSchema } from "@/lib/validation";
 
 function clientKey(request: NextRequest) {
@@ -29,7 +29,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  await forwardSubmission({ type: "contact", payload: parsed.data });
+  const locale = typeof body?.locale === "string" ? body.locale : "en";
+  const saved = await saveContactSubmission(parsed.data, locale);
 
-  return NextResponse.json({ ok: true });
+  if (!saved.saved) {
+    await forwardSubmission({ type: "contact", payload: parsed.data });
+  }
+
+  return NextResponse.json({ ok: true, persisted: saved.saved });
 }

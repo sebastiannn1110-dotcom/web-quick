@@ -8,10 +8,12 @@ Deploy revisado: `https://web-quick.onrender.com`
 
 Estado de esta ejecucion:
 
+- Actualizacion 2026-07-17: se agregaron flujos de auth, middleware de sesion Supabase, panel admin protegido con productos/RFQ/contactos/listados, persistencia Supabase-first para contacto/RFQ, notificaciones por Resend, boton flotante de IA y scripts `typecheck`/`test`.
+- El video local `video quik/linkedify-1784271038891.mp4` pesa aproximadamente 28.6 MB y no fue copiado a `public/` ni versionado porque `ffmpeg`/`ffprobe` no estan disponibles para generar versiones optimizadas. La carpeta `video quik/` queda ignorada para evitar subir el bruto accidentalmente.
 - Los cambios locales de Quicksol estan siendo revisados para publicacion segura.
 - Rutas incluidas en el paquete local: `/[locale]/catalog`, `/[locale]/products/[slug]`, `/[locale]/portal`, `/[locale]/admin`, `/[locale]/cart`, `/[locale]/favorites`, `/[locale]/quotes`, `/[locale]/orders`, `/[locale]/rfq`, `/[locale]/contact`, `/[locale]/brands`, `/[locale]/market-insights`.
 - La migracion Supabase `supabase/migrations/202607160001_b2b_catalog_platform.sql` se incluye como archivo versionado, pero no fue aplicada en esta ejecucion.
-- Siguen pendientes: auth real, login, registro, CRUD administrativo, uploads, carrito persistente, LinkedIn manual/official, UI flotante de IA, function calling completo, embeddings y pruebas automatizadas.
+- Siguen pendientes: aplicar migracion en Supabase real, configurar variables en Render, uploads/storage, carrito persistente, LinkedIn manual/official, function calling completo, embeddings, video optimizado y QA con datos reales.
 - Commit de publicacion: se crea en esta ejecucion; el hash exacto queda registrado en la salida final porque no puede conocerse antes de crear el commit.
 
 ## 1. Resumen ejecutivo
@@ -137,6 +139,9 @@ Variable adicional usada por el codigo:
 | Variable | Uso |
 | --- | --- |
 | `CRM_WEBHOOK_URL` | `src/lib/submissions.ts`; reenvio opcional de contacto/RFQ actual. |
+| `RESEND_API_KEY` | `src/lib/email/provider.ts`; envio server-side de notificaciones por email. |
+| `EMAIL_FROM` | `src/lib/email/provider.ts`; remitente de Resend. |
+| `ADMIN_NOTIFICATION_EMAILS` | `src/lib/email/provider.ts`; destinatarios internos separados por coma. |
 
 Inconsistencia clave:
 

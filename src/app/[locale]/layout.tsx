@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { ShopWithAI } from "@/components/ai/ShopWithAI";
 import { locales, type Locale } from "@/lib/constants";
 import { getDictionary, isLocale } from "@/lib/dictionary";
 import "../globals.css";
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
           <main id="main" className="flex-1">
             {children}
           </main>
+          <ShopWithAI locale={locale} />
           <Footer locale={locale} dict={dict} />
         </NextIntlClientProvider>
       </body>

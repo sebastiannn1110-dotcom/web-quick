@@ -1,22 +1,22 @@
 export function getSupabasePublicConfig() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const publicKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const isValidUrl = Boolean(url?.startsWith("https://"));
+  const isPlaceholder =
+    !publicKey ||
+    publicKey.includes("example") ||
+    publicKey.includes("your-") ||
+    publicKey.includes("placeholder");
 
   return {
     url,
-    anonKey,
-    isConfigured: Boolean(url && anonKey),
+    publicKey,
+    anonKey: publicKey,
+    isConfigured: Boolean(isValidUrl && publicKey && !isPlaceholder),
+    error: !isValidUrl || isPlaceholder
+      ? "Supabase public key is missing or invalid"
+      : null,
   };
 }
-
-export function getSupabaseAdminConfig() {
-  const publicConfig = getSupabasePublicConfig();
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  return {
-    ...publicConfig,
-    serviceRoleKey,
-    isConfigured: Boolean(publicConfig.url && serviceRoleKey),
-  };
-}
-

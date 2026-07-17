@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, UserRound, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems, type Locale } from "@/lib/constants";
@@ -62,6 +62,20 @@ export function Header({
             compact
           />
           <Link
+            href={localizedPath(locale, "/portal")}
+            className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/15 bg-white/8 text-white transition hover:bg-white/12"
+            aria-label={nav.portal}
+          >
+            <UserRound aria-hidden="true" size={18} />
+          </Link>
+          <Link
+            href={localizedPath(locale, "/cart")}
+            className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/15 bg-white/8 text-white transition hover:bg-white/12"
+            aria-label="Cart"
+          >
+            <ShoppingCart aria-hidden="true" size={18} />
+          </Link>
+          <Link
             href={localizedPath(locale, "/rfq")}
             className="focus-ring rounded-md bg-orange-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-500"
           >
@@ -99,6 +113,20 @@ export function Header({
               className="focus-ring mt-2 rounded-md bg-orange-600 px-4 py-3 text-center text-base font-semibold text-white"
             >
               {nav.rfq}
+            </Link>
+            <Link
+              href={localizedPath(locale, "/portal")}
+              onClick={() => setOpen(false)}
+              className="focus-ring rounded-md px-3 py-3 text-base font-semibold text-stone-100 hover:bg-white/8"
+            >
+              {nav.portal}
+            </Link>
+            <Link
+              href={localizedPath(locale, "/cart")}
+              onClick={() => setOpen(false)}
+              className="focus-ring rounded-md px-3 py-3 text-base font-semibold text-stone-100 hover:bg-white/8"
+            >
+              Cart
             </Link>
             <div className="py-2">
               <LanguageSwitcher

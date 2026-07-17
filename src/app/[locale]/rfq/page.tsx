@@ -20,10 +20,9 @@ export default async function RFQPage({ params }: PageProps) {
       />
       <section className="section-y bg-slate-50">
         <div className="container-page max-w-4xl">
-          <ContactForm type="rfq" />
+          <ContactForm type="rfq" locale={locale} />
         </div>
       </section>
     </>
   );
 }
-

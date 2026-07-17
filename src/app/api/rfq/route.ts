@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { rateLimit } from "@/lib/rate-limit";
-import { forwardSubmission } from "@/lib/submissions";
+import { forwardSubmission, saveRFQSubmission } from "@/lib/submissions";
 import { rfqSchema, validateBomFile } from "@/lib/validation";
 
 function clientKey(request: NextRequest) {
@@ -62,11 +62,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  await forwardSubmission({
-    type: "rfq",
-    payload: parsed.data,
-    bom: fileResult.file,
-  });
+  const locale = String(formData.get("locale") || "en");
+  const saved = await saveRFQSubmission(parsed.data, locale, fileResult.file);
 
-  return NextResponse.json({ ok: true });
+  if (!saved.saved) {
+    await forwardSubmission({
+      type: "rfq",
+      payload: parsed.data,
+      bom: fileResult.file,
+    });
+  }
+
+  return NextResponse.json({ ok: true, persisted: saved.saved });
 }
