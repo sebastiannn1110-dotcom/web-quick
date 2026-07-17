@@ -147,11 +147,8 @@ export async function POST(request: Request) {
           id: user.id,
           email,
           full_name: "Sebastian Admin",
-          company_name: "Quicksol",
-          preferred_locale: "es",
           role: "super_admin",
           status: "active",
-          receive_notifications: true,
         },
         { onConflict: "id" },
       )
