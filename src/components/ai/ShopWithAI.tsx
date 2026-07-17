@@ -64,25 +64,27 @@ export function ShopWithAI({ locale }: { locale: string }) {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="focus-ring ai-shop-button fixed bottom-[calc(12px+env(safe-area-inset-bottom))] right-3 z-[80] inline-flex min-h-[52px] max-w-[calc(100vw-24px)] items-center gap-3 rounded-full border border-slate-200 bg-white py-2 pl-2 pr-4 text-sm font-semibold text-slate-950 shadow-[0_18px_45px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_24px_54px_rgba(15,23,42,0.24)] sm:bottom-6 sm:right-6 sm:min-h-14 sm:pr-5 sm:text-base"
-        aria-label={buttonLabel}
-      >
-        <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-600 text-white shadow-lg shadow-orange-900/20 sm:h-11 sm:w-11">
-          <ShoppingCart aria-hidden="true" className="h-5 w-5" />
-          <Sparkles
-            aria-hidden="true"
-            className="ai-shop-sparkle absolute -right-1 -top-1 h-4 w-4 text-orange-200"
-          />
-          <Sparkles
-            aria-hidden="true"
-            className="ai-shop-sparkle ai-shop-sparkle-delayed absolute -bottom-1 -left-1 h-3.5 w-3.5 text-orange-100"
-          />
-        </span>
-        <span className="whitespace-nowrap">{buttonLabel}</span>
-      </button>
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="focus-ring ai-shop-button fixed bottom-[calc(12px+env(safe-area-inset-bottom))] right-3 z-[80] inline-flex min-h-[52px] max-w-[calc(100vw-24px)] items-center gap-3 rounded-full border border-slate-200 bg-white py-2 pl-2 pr-4 text-sm font-semibold text-slate-950 shadow-[0_18px_45px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_24px_54px_rgba(15,23,42,0.24)] sm:bottom-6 sm:right-6 sm:min-h-14 sm:pr-5 sm:text-base"
+          aria-label={buttonLabel}
+        >
+          <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-600 text-white shadow-lg shadow-orange-900/20 sm:h-11 sm:w-11">
+            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
+            <Sparkles
+              aria-hidden="true"
+              className="ai-shop-sparkle absolute -right-1 -top-1 h-4 w-4 text-orange-200"
+            />
+            <Sparkles
+              aria-hidden="true"
+              className="ai-shop-sparkle ai-shop-sparkle-delayed absolute -bottom-1 -left-1 h-3.5 w-3.5 text-orange-100"
+            />
+          </span>
+          <span className="whitespace-nowrap">{buttonLabel}</span>
+        </button>
+      ) : null}
       {open ? (
         <div className="fixed inset-0 z-50 flex items-end bg-slate-950/30 p-3 pb-[calc(12px+env(safe-area-inset-bottom))] backdrop-blur-sm md:justify-end md:p-6">
           <div className="ml-auto flex h-[min(86vh,680px)] w-full max-w-md flex-col rounded-md bg-white shadow-2xl md:h-[calc(100vh-48px)]">

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowRight, MessageSquareText, Search } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import type { Locale } from "@/lib/constants";
@@ -15,15 +14,20 @@ export function HeroSection({
   return (
     <section className="relative overflow-hidden bg-[#071314] text-white">
       <div className="absolute inset-0">
-        <Image
-          src="/images/quicksol-global-supply-network.png"
-          alt={dict.home.hero.imageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center opacity-42"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#071314_0%,rgba(7,19,20,0.94)_38%,rgba(6,47,51,0.48)_100%)]" />
+        <video
+          className="h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/videos/quicksol-home-hero-poster.webp"
+          aria-label={dict.home.hero.imageAlt}
+        >
+          <source src="/videos/quicksol-home-hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#071314_0%,rgba(7,19,20,0.9)_36%,rgba(6,47,51,0.34)_100%)]" />
+        <div className="absolute inset-0 bg-slate-950/20" />
         <div className="absolute inset-x-0 bottom-0 h-1 bg-orange-600" />
       </div>
       <div className="container-page relative min-h-[calc(100vh-80px)] py-16 md:min-h-[720px] md:py-24">

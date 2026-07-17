@@ -51,9 +51,9 @@ export function createPageMetadata({
       locale,
       images: [
         {
-          url: "/images/quicksol-global-supply-network.png",
-          width: 1536,
-          height: 1024,
+          url: "/videos/quicksol-home-hero-poster.webp",
+          width: 960,
+          height: 544,
           alt: "Quicksol Global electronic components supply chain network",
         },
       ],
@@ -62,7 +62,7 @@ export function createPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/quicksol-global-supply-network.png"],
+      images: ["/videos/quicksol-home-hero-poster.webp"],
     },
   };
 }
@@ -74,7 +74,7 @@ export function organizationSchema(dict: Dictionary, locale: Locale) {
     name: "Quicksol Global",
     url: `${siteBaseUrl}/${locale}`,
     description: dict.schema.organizationDescription,
-    logo: `${siteBaseUrl}/images/quicksol-global-supply-network.png`,
+    logo: `${siteBaseUrl}/logos/quicksol-logo.svg`,
     areaServed: ["Asia Pacific", "Americas", "Europe"],
     knowsAbout: [
       "Electronic component sourcing",
