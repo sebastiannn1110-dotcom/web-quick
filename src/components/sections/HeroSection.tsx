@@ -3,6 +3,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import type { Locale } from "@/lib/constants";
 import { localizedPath, type Dictionary } from "@/lib/dictionary";
 import { AnimatedWrapper } from "@/components/ui/AnimatedWrapper";
+import { HeroVideo } from "@/components/sections/HeroVideo";
 
 export function HeroSection({
   locale,
@@ -14,18 +15,7 @@ export function HeroSection({
   return (
     <section className="relative overflow-hidden bg-[#071314] text-white">
       <div className="absolute inset-0">
-        <video
-          className="h-full w-full object-cover object-center"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/videos/quicksol-home-hero-poster.webp"
-          aria-label={dict.home.hero.imageAlt}
-        >
-          <source src="/videos/quicksol-home-hero.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo label={dict.home.hero.imageAlt} />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#071314_0%,rgba(7,19,20,0.9)_36%,rgba(6,47,51,0.34)_100%)]" />
         <div className="absolute inset-0 bg-slate-950/20" />
         <div className="absolute inset-x-0 bottom-0 h-1 bg-orange-600" />
