@@ -7,9 +7,15 @@ type PageProps = { params: Promise<{ locale: string }> };
 export default async function NewProductPage({ params }: PageProps) {
   const { locale } = await params;
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   const [{ data: brands }, { data: categories }] = await Promise.all([
     supabase!.from("brands").select("id,name").order("name", { ascending: true }),

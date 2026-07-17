@@ -48,9 +48,15 @@ export default async function AdminAiCatalogPage({
   const queryParams = await searchParams;
   const q = value(queryParams, "q")?.trim() || "";
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   const [
     total,

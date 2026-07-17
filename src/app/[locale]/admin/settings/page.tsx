@@ -7,9 +7,15 @@ type PageProps = { params: Promise<{ locale: string }> };
 export default async function AdminSettingsPage({ params }: PageProps) {
   const { locale } = await params;
   const { access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   return (
     <section className="section-y bg-slate-50">

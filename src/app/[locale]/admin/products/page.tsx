@@ -22,9 +22,15 @@ export default async function AdminProductsPage({ params, searchParams }: PagePr
   const safeQ = q.replace(/[%,]/g, "");
   const status = value(queryParams, "status")?.trim() || "";
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   let query = supabase!
     .from("products")

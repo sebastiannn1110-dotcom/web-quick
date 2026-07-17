@@ -7,9 +7,15 @@ type PageProps = { params: Promise<{ locale: string }> };
 export default async function AdminCustomersPage({ params }: PageProps) {
   const { locale } = await params;
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   const columns = ["created_at", "full_name", "company_name", "role", "status", "receive_notifications"];
   const { data } = await supabase!.from("profiles").select(["id", ...columns].join(",")).order("created_at", { ascending: false }).limit(100);

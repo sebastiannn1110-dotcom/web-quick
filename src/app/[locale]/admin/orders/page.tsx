@@ -7,9 +7,15 @@ type PageProps = { params: Promise<{ locale: string }> };
 export default async function AdminOrdersPage({ params }: PageProps) {
   const { locale } = await params;
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   const columns = ["created_at", "order_number", "status", "total_amount", "currency", "payment_status", "fulfillment_status"];
   const { data } = await supabase!.from("orders").select(["id", ...columns].join(",")).order("created_at", { ascending: false }).limit(100);

@@ -9,9 +9,15 @@ type PageProps = { params: Promise<{ locale: string; id: string }> };
 export default async function AdminRfqDetailPage({ params }: PageProps) {
   const { locale, id } = await params;
   const { supabase, access } = await createCheckedAdminClient();
-  const blocked = <AdminStatus locale={locale} configured={access.configured} allowed={access.allowed} />;
-
-  if (blocked) return blocked;
+  if (!access.configured || !access.allowed) {
+    return (
+      <AdminStatus
+        locale={locale}
+        configured={access.configured}
+        allowed={access.allowed}
+      />
+    );
+  }
 
   const [{ data: rfq }, { data: items }] = await Promise.all([
     supabase!.from("rfq_requests").select("*").eq("id", id).maybeSingle(),
