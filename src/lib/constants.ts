@@ -16,6 +16,7 @@ export const localeNames: Record<Locale, string> = {
 
 export const navItems = [
   { key: "home", href: "/" },
+  { key: "brands", href: "/catalog" },
   { key: "about", href: "/about" },
   { key: "services", href: "/services" },
   { key: "quality", href: "/quality" },
@@ -68,6 +69,7 @@ export const siteBaseUrl =
 
 export const publicPages = [
   "",
+  "/catalog",
   "/about",
   "/services",
   "/market-insights",
@@ -83,6 +85,15 @@ export const publicPages = [
   "/legal/terms",
   "/legal/privacy",
   "/legal/cookies",
+] as const;
+
+export const privatePages = [
+  "/admin",
+  "/portal",
+  "/cart",
+  "/favorites",
+  "/quotes",
+  "/orders",
 ] as const;
 
 export const allowedBomTypes = [
